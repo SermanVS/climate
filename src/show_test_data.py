@@ -5,7 +5,8 @@ from parameters import Stats
 
 def show_test_data(test_stats_list, train_stats_list):
     plt.figure(figsize=[18, 12])
-    
+    plt.rc('font', size=10)
+
     ba_test = [item.ba for item in test_stats_list]
     ba_train = [item.ba for item in train_stats_list]
     plt.subplot(2, 3, 1)

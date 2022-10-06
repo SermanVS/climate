@@ -77,11 +77,11 @@ def train(nn, batch_size, num_epochs, train_data, labels_train, loss_func, optim
             optimizer.step()  
 
         if (step_test):
-            tp, tn, fp, fn, sigmas = test(nn, args[0], args[1])  
+            tp, tn, fp, fn, sigmas, _ = test(nn, args[0], args[1])  
             test_stats = get_test_stats(args[0].shape[2], tp, tn, fp, fn, sigmas)          
             test_stats_list.append(test_stats)          
 
-            tp, tn, fp, fn, sigmas = test(nn, train_data, labels_train)  
+            tp, tn, fp, fn, sigmas, _ = test(nn, train_data, labels_train)  
             train_stats = get_test_stats(args[0].shape[2], tp, tn, fp, fn, sigmas)       
             train_stats_list.append(train_stats)
 

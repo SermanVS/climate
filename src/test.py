@@ -10,7 +10,10 @@ def test(nn, test_data, labels_test):
     # Test the model
     nn.eval()    
     sigmas = []
-
+    tp_ids = []
+    fp_ids = []
+    fn_ids = []
+    tn_ids = []
     with torch.no_grad():
         tp = 0
         fp = 0
@@ -33,16 +36,20 @@ def test(nn, test_data, labels_test):
             # 0 - 1 when cyclone is present
             if (pred_y == label and label == 1):
                 tp += 1
+                tp_ids.append(i)
             # 1 - 0 when no cyclone is present
             elif (pred_y == label and label == 0):
                 tn += 1
+                tn_ids.append(i)
             # 0 - 1 when no cyclone is present
             elif (pred_y != label and label == 1):
                 fn += 1
+                fn_ids.append(i)
             # 1 - 0 when cyclone is present
             elif (pred_y != label and label == 0):
                 fp += 1
+                fp_ids.append(i)
             pass   
         pass
 
-    return tp, tn, fp, fn, sigmas
+    return tp, tn, fp, fn, sigmas, (tp_ids, fp_ids, fn_ids, tn_ids)
