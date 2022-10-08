@@ -7,6 +7,16 @@ import pandas as pd
 import numpy as np
 import os
 
+
+class DisplayData:
+    def __init__(self, test_mx, train_mx):
+        self.tp = test_mx[0, 0] + train_mx[0, 0]
+        self.fp = test_mx[0, 1] + train_mx[0, 1]
+        self.fn = test_mx[1, 0] + train_mx[1, 0]
+        self.tn = test_mx[1, 1] + train_mx[1, 1]
+        self.fpr = self.fp / (self.fp + self.tn)
+        self.tpr = self.tp / (self.tp + self.fn)
+
 def map_ids_to_color(train_id, test_id, results_train, results_test):
     tp_train = train_id[results_train[0]]
     fp_train = train_id[results_train[1]]
@@ -39,7 +49,7 @@ def map_ids_to_color(train_id, test_id, results_train, results_test):
 
 
 
-def draw_colormesh_by_tick(image_data_mx, save=False, filename=''):
+def draw_colormesh_by_tick(image_data_mx, save=False, filename='', metric='MSLP', display_data=None):
     plt.rc('font', size=5)
 
     sns_cmap = sns.color_palette("Set1")
@@ -51,13 +61,13 @@ def draw_colormesh_by_tick(image_data_mx, save=False, filename=''):
     cmap = clr.ListedColormap([tn_color, tp_color, fp_color, fn_color])
 
 
-    fn_patch = mpatches.Patch(color=fn_color, label='False Negative (There is a cyclone but we did not detect it)')
-    tn_patch = mpatches.Patch(color=tn_color, label='True Negative (There is no cyclone and we did not detect anything)')
-    tp_patch = mpatches.Patch(color=tp_color, label='True Positive (There is a cyclone and we detected it)')
-    fp_patch = mpatches.Patch(color=fp_color, label='False Positive (There is no cyclone but we did detected it)')
+    fn_patch = mpatches.Patch(color=fn_color, label=f'False Negative (There is a cyclone but we did not detect it). Count: {display_data.fn}')
+    tn_patch = mpatches.Patch(color=tn_color, label=f'True Negative (There is no cyclone and we did not detect anything). Count: {display_data.tn}')
+    tp_patch = mpatches.Patch(color=tp_color, label=f'True Positive (There is a cyclone and we detected it). Count: {display_data.tp}')
+    fp_patch = mpatches.Patch(color=fp_color, label=f'False Positive (There is no cyclone but we did detected it). Count: {display_data.fp}')
 
     fig, ax = plt.subplots(1, dpi=1200)
-    ax.set_title("Cyclone detection by tick")
+    ax.set_title(f"Cyclone detection by tick. FPR = {display_data.fpr}. TPR = {display_data.tpr}")
     ax.set_xlabel("month")
     ax.set_ylabel("day")
 
@@ -76,7 +86,7 @@ def draw_colormesh_by_tick(image_data_mx, save=False, filename=''):
 
     ax.legend(handles=[fn_patch, tn_patch, tp_patch, fp_patch], loc='upper center', bbox_to_anchor=(0.5, -0.05))
     if save:
-        path = '../images/MSLP/bytick/' 
+        path = '../images/' + metric + '/bytick/' 
         if not os.path.exists(path):
             os.makedirs(path)
         fig.savefig(path + filename + '.png', transparent=False, \
@@ -104,7 +114,7 @@ def map_events_to_color(events, train_id, test_id, results_train, results_test):
     return np.array(marked_events)
 
 
-def draw_colormesh_by_event(marked_events, save=False, filename=''):
+def draw_colormesh_by_event(marked_events, save=False, filename='', metric='MSLP', display_data=None):
     plt.rc('font', size=5)
 
     sns_cmap = sns.color_palette("Set1")
@@ -114,11 +124,11 @@ def draw_colormesh_by_event(marked_events, save=False, filename=''):
     cmap = clr.ListedColormap([tp_color, fn_color])
 
 
-    fn_patch = mpatches.Patch(color=fn_color, label='False Negative (There is a cyclone but we did not detect it)')
-    tp_patch = mpatches.Patch(color=tp_color, label='True Positive (There is a cyclone and we detected it)')
+    fn_patch = mpatches.Patch(color=fn_color, label=f'False Negative (There is a cyclone but we did not detect it). Count: {display_data.fn}')
+    tp_patch = mpatches.Patch(color=tp_color, label=f'True Positive (There is a cyclone and we detected it). Count: {display_data.tp}')
 
     fig, ax = plt.subplots(1, dpi=1200)
-    ax.set_title("Cyclone detection by event")
+    ax.set_title(f"Cyclone detection by event. FPR = {display_data.fpr}. TPR = {display_data.tpr}")
     ax.set_xlabel("event")
     ax.set_ylabel("tick")
 
@@ -136,7 +146,7 @@ def draw_colormesh_by_event(marked_events, save=False, filename=''):
 
     ax.legend(handles=[tp_patch, fn_patch], loc='upper center', bbox_to_anchor=(0.5, -0.05))
     if save:
-        path = '../images/MSLP/byevent/' 
+        path = '../images/' + metric + '/byevent/' 
         if not os.path.exists(path):
             os.makedirs(path)
         fig.savefig(path + filename + '.png', transparent=False, \
