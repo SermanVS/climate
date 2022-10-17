@@ -6,7 +6,7 @@ import seaborn as sns
 import pandas as pd
 import numpy as np
 import os
-
+from config_reader import Config
 
 class DisplayData:
     def __init__(self, test_mx, train_mx):
@@ -49,7 +49,8 @@ def map_ids_to_color(train_id, test_id, results_train, results_test):
 
 
 
-def draw_colormesh_by_tick(image_data_mx, save=False, filename='', metric='MSLP', display_data=None):
+def draw_colormesh_by_tick(image_data_mx, save=False, filename='', display_data=None):
+    cfg = Config()
     plt.rc('font', size=5)
 
     sns_cmap = sns.color_palette("Set1")
@@ -86,7 +87,7 @@ def draw_colormesh_by_tick(image_data_mx, save=False, filename='', metric='MSLP'
 
     ax.legend(handles=[fn_patch, tn_patch, tp_patch, fp_patch], loc='upper center', bbox_to_anchor=(0.5, -0.05))
     if save:
-        path = '../images/' + metric + '/bytick/' 
+        path = '../images/'  + cfg.mode + '/' + cfg.metric + '/bytick/' 
         if not os.path.exists(path):
             os.makedirs(path)
         fig.savefig(path + filename + '.png', transparent=False, \
@@ -114,7 +115,8 @@ def map_events_to_color(events, train_id, test_id, results_train, results_test):
     return np.array(marked_events)
 
 
-def draw_colormesh_by_event(marked_events, save=False, filename='', metric='MSLP', display_data=None):
+def draw_colormesh_by_event(marked_events, save=False, filename='', display_data=None):
+    cfg = Config()
     plt.rc('font', size=5)
 
     sns_cmap = sns.color_palette("Set1")
@@ -146,7 +148,7 @@ def draw_colormesh_by_event(marked_events, save=False, filename='', metric='MSLP
 
     ax.legend(handles=[tp_patch, fn_patch], loc='upper center', bbox_to_anchor=(0.5, -0.05))
     if save:
-        path = '../images/' + metric + '/byevent/' 
+        path = '../images/' + cfg.mode + '/' + cfg.metric + '/byevent/' 
         if not os.path.exists(path):
             os.makedirs(path)
         fig.savefig(path + filename + '.png', transparent=False, \

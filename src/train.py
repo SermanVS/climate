@@ -86,9 +86,6 @@ def train(nn, batch_size, num_epochs, train_data, labels_train, loss_func, optim
             train_stats_list.append(train_stats)
 
             show_test_data(test_stats_list, train_stats_list)
-
-            #print(test_stats.conf_matrix)
-            #print(train_stats.conf_matrix)
             nn.train()
         pass
         loss_vals.append(running_loss / train_data.shape[2])
