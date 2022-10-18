@@ -68,16 +68,18 @@ def draw_colormesh_by_tick(image_data_mx, save=False, filename='', display_data=
     fp_patch = mpatches.Patch(color=fp_color, label=f'False Positive (There is no cyclone but we did detected it). Count: {display_data.fp}')
 
     fig, ax = plt.subplots(1, dpi=1200)
-    ax.set_title(f"Cyclone detection by tick. FPR = {display_data.fpr}. TPR = {display_data.tpr}")
+    ax.set_title("Cyclone detection by tick. FPR = {:.4f} TPR = {:.4f}".format(display_data.fpr, display_data.tpr))
     ax.set_xlabel("month")
     ax.set_ylabel("day")
 
     ax.pcolormesh(image_data_mx.T, cmap=cmap, vmin=0, vmax=3)
+    
+    # 475 is 113960 / 240
+    ax.set_xlim(0, 475)
+    # 240 ticks in a month. 1 day is 8 ticks, 30 days in month
+    ax.set_ylim(0, 240)
 
-    ax.set_xlim(0, 495)
-    ax.set_ylim(0, 248)
-
-    ax.set_xticks(np.arange(0, 495, 15))
+    ax.set_xticks(np.arange(0, 490, 15))
     ax.set_yticks(np.arange(0, 248, 8))
     ax.set_yticklabels(np.arange(0, 31, 1))
 
@@ -103,6 +105,7 @@ def map_events_to_color(events, train_id, test_id, results_train, results_test):
     tp_test = test_id[results_test[0]]
     fn_test = test_id[results_test[2]]
 
+    # 145 is y max limit
     marked_events = np.full(shape=(len(events), 145), fill_value=nan)
 
     for i, event in enumerate(events):
@@ -130,7 +133,7 @@ def draw_colormesh_by_event(marked_events, save=False, filename='', display_data
     tp_patch = mpatches.Patch(color=tp_color, label=f'True Positive (There is a cyclone and we detected it). Count: {display_data.tp}')
 
     fig, ax = plt.subplots(1, dpi=1200)
-    ax.set_title(f"Cyclone detection by event. FPR = {display_data.fpr}. TPR = {display_data.tpr}")
+    ax.set_title("Cyclone detection by event. FPR = {:.4f} TPR = {:.4f}".format(display_data.fpr, display_data.tpr))
     ax.set_xlabel("event")
     ax.set_ylabel("tick")
 

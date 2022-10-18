@@ -6,3 +6,4 @@ class Config:
         config_parser.read('config.cfg')
         self.mode = config_parser['DEFAULT']['mode']
         self.metric = config_parser['DEFAULT']['metric']
+        self.metric_path = config_parser['DEFAULT']['metric_path']

@@ -7,7 +7,7 @@ def make_final_table():
     cfg = Config()
     paths = glob.glob('../temp/' + cfg.mode + '/' + cfg.metric + '/*.csv')
     
-    out_filepath = Path('../results/' + cfg.mode + '/' + cfg.metric + '.csv')  
+    out_filepath = Path('../results/' + cfg.mode + '/' + cfg.metric + '.xls')  
     out_filepath.parent.mkdir(parents=True, exist_ok=True)  
     
     
@@ -28,6 +28,6 @@ def make_final_table():
         file_data['Id'] = index + 1
         data = pd.concat([data, file_data])
 
-    data.to_csv(out_filepath, index=False)     
+    data.to_excel(out_filepath, index=False)     
     return data
 
