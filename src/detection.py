@@ -239,10 +239,10 @@ def draw_colormesh_by_tick(image_data_mx, save=False, filename='', display_data=
     ax.set_yticklabels(np.arange(0, 32, 1))
 
     box = ax.get_position()
-    ax.set_position([box.x0, box.y0 + box.height * 0.1,
+    ax.set_position([box.x0, box.y0 + box.height * 0.15,
                     box.width, box.height * 0.9])
 
-    ax.legend(handles=handles, loc='upper center', bbox_to_anchor=(0.5, -0.05))
+    ax.legend(handles=handles, loc='upper center', bbox_to_anchor=(0.5, -0.1))
     if save:
         path = '../images/'  + cfg.mode + '/' + cfg.metric + '/bytick/' 
         if not os.path.exists(path):
@@ -309,7 +309,7 @@ def draw_colormesh_by_event(marked_events, save=False, filename='', display_data
     ax.set_position([box.x0, box.y0 + box.height * 0.1,
                     box.width, box.height * 0.9])
 
-    ax.legend(handles=[tp_patch, fn_patch], loc='upper center', bbox_to_anchor=(0.5, -0.05))
+    ax.legend(handles=[tp_patch, fn_patch], loc='upper center', bbox_to_anchor=(0.5, -0.1))
     if save:
         path = '../images/' + cfg.mode + '/' + cfg.metric + '/byevent/' 
         if not os.path.exists(path):
