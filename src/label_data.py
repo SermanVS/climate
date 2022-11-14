@@ -1,17 +1,34 @@
 import numpy as np
 from config_reader import Config
 
+'''
+Maybe create a class and make cyclone_events accessible
+'''
+def is_cyclone_present(cyclone_events, tick):
+    return cyclone_events[:, :, tick].sum() > 0
+
+def is_cyclone_expected(cyclone_events, tick, w):
+    for i in range(w):
+        try:
+            if is_cyclone_present(cyclone_events, tick + i) \
+                and not is_cyclone_present(cyclone_events, tick):
+                return True
+        except:
+            break
+    return False
+
 def label_data(cyclone_events):
     cfg = Config()
-    labels = np.zeros(113960)
+    ticks = cyclone_events.shape[2]
+    labels = np.zeros(ticks)
     events = []
     event_count = 0
     in_event = False
     temp_arr = []
 
     if (cfg.mode == 'recognize'):
-        for i in range(113960):
-            if len(cyclone_events[:, :, i][cyclone_events[:, :, i] != False]) > 0:
+        for i in range(ticks):
+            if is_cyclone_present(cyclone_events, i):
                 labels[i] = 1
                 if not in_event:
                     in_event = True
@@ -25,10 +42,11 @@ def label_data(cyclone_events):
                     temp_arr = []
     elif (cfg.mode == 'predict'):
         w = 8
-        for i in range(w, 113960):
-            if len(cyclone_events[:, :, i][cyclone_events[:, :, i] != False]) > 0 and \
-            not len(cyclone_events[:, :, i - w][cyclone_events[:, :, i - w] != False]) > 0:
-                labels[i - w] = 1
+        for i in range(ticks):
+            if is_cyclone_expected(cyclone_events, i, w):
+                labels[i] = 1
+            if is_cyclone_present(cyclone_events, i):    
+                labels[i] = 2
                 if not in_event:
                     in_event = True
                     event_count += 1

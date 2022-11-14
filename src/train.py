@@ -27,11 +27,13 @@ args         - test data and test labels.
 
 It's not recommended to use 'draw' and 'step_test' at the same time.
 '''
-def train(nn, batch_size, num_epochs, train_data, labels_train, loss_func, optimizer, args, draw=False, step_test=False):  
+def train(nn, batch_size, num_epochs, train_data, labels_train_pre, loss_func, optimizer, args, draw=False, step_test=False):  
     nn.train()
     nn = nn.double()
     loss_vals = []
     epoch_loss = []
+
+    labels_train = torch.tensor([(0 if i == 2 else i) for i in labels_train_pre])
     
     test_stats_list = []
     train_stats_list = []
@@ -81,7 +83,7 @@ def train(nn, batch_size, num_epochs, train_data, labels_train, loss_func, optim
             test_stats = get_test_stats(args[0].shape[2], tp, tn, fp, fn, sigmas)          
             test_stats_list.append(test_stats)          
 
-            tp, tn, fp, fn, sigmas, _ = test(nn, train_data, labels_train)  
+            tp, tn, fp, fn, sigmas, _ = test(nn, train_data, labels_train_pre)  
             train_stats = get_test_stats(args[0].shape[2], tp, tn, fp, fn, sigmas)       
             train_stats_list.append(train_stats)
 

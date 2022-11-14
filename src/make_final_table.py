@@ -7,7 +7,7 @@ def make_final_table():
     cfg = Config()
     paths = glob.glob('../temp/' + cfg.mode + '/' + cfg.metric + '/*.csv')
     
-    out_filepath = Path('../results/' + cfg.mode + '/' + cfg.metric + '.xls')  
+    out_filepath = Path('../results/' + cfg.mode + '/' + cfg.metric + '.xlsx')  
     out_filepath.parent.mkdir(parents=True, exist_ok=True)  
     
     
