@@ -25,16 +25,16 @@ The file structure should be as follows. It is presumed that whoever attempts to
 
 ```
 climate
-|	README.md
-|	shuffle_cyclone.csv
-|	shuffle_no_cyclone.csv
+|   README.md
+|   shuffle_cyclone.csv
+|   shuffle_no_cyclone.csv
 |
 └---src
-|	|	Cyclone.ipynb
-|	|	Cyclone_bs24.ipynb
-|   |   Cyclone_bs24_de.ipynb
-	...
-|   |   train.py	
+|	|   Cyclone.ipynb
+|	|   Cyclone_bs24.ipynb
+|   	|   Cyclone_bs24_de.ipynb
+|	|    ...
+|   	|   train.py	
 |
 └---data
 |   |   cyclone_times.csv
@@ -60,16 +60,16 @@ climate
 |               |   metric_names.npy
 |               |
 |               └---diff_metrics
-|               	|   ...
+|                   |   ...
 |               |
-|				└---input_data
-|               	|   ...
+|		└---input_data
+|                   |   ...
 |               |
 |               └---lgm_deviation_for_cyclones
-|               	|   ...
+|                   |   ...
 |               |
 |               └---network_metrics
-|               	|   ...
+|                   |   ...
 |               |
 |               └---probability_for_metrics
 |                   |
@@ -78,7 +78,7 @@ climate
 |                   |
 |                   └---input_data
 |                       |   MSLP_preproc.npy
-|                       |	...
+|                       |   ...
 |                   |
 |                   └---network_metrics
 |                       |   closeness_w.npy
