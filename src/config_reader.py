@@ -7,4 +7,5 @@ class Config:
         self.mode = config_parser['DEFAULT']['mode']
         self.metric = config_parser['DEFAULT']['metric']
         self.metric_path = config_parser['DEFAULT']['metric_path']
+        self.retrain = config_parser['DEFAULT']['retrain']
         self.w = int(config_parser['DEFAULT']['w'])

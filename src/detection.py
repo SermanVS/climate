@@ -97,7 +97,6 @@ def map_ids_to_color_by_day(train_id, test_id, results_train, results_test):
     for k, month in enumerate(month_ticks):
         for i, day_tick in enumerate(month):
             if month_ticks[k][i] == 4:
-                #print(f"Month {k}. Days: {month_ticks[k]}")
                 break
             if tick in tp_train or tick in tp_test:
                 month_ticks[k][i] =  1
@@ -108,9 +107,6 @@ def map_ids_to_color_by_day(train_id, test_id, results_train, results_test):
             elif tick in tn_train or tick in tn_test:
                 month_ticks[k][i]  =  0
             tick += 1
-        #print(f"Month {k}. Days: {month_ticks[k]}")
-
-    #image_data_int = np.array([int(i) if not pd.isna(i) else nan for i in month_ticks])
 
     return month_ticks
 

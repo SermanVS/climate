@@ -1,10 +1,27 @@
 ## This is a set of neural networks for identifying and predicting climate events
 
+#### Purpose
+
+The source code in this repository attempts to solve a task of recognizing and predicting cyclone events using several metrics.
+
+The recognition means to identify whether there is a cyclone event present on a current tick, while the prediction task means to identify whether there will be a cyclone event present ***w*** ticks from the current tick.
+
+All networks are based on the formula
+$$
+\sigma (\sum(\sigma((w * x - a) * b)) - c).
+$$
+But most networks alter this formula slightly to reduce a number of parameters or to limit their range. Also, most networks perform maxpooling before implementing the formula above.
+
+#### Data
+
+The networks implemented here require specific metrics to learn properly. These metrics are ***MSLP_preproc***, ***LCC_w***, ***EVC_w***, ***degree_w***, ***closeness_w***. Each metric is a NumPy array of shape (36, 69, 113960) - 113960 ticks of images of size (36, 69).
+
 #### Repository description
 
 1. ***src*** - contains Jupyter Notebook files with implemented neural networks and necessary .py files with functions;
-2. ***shuffle_cyclone.csv*** - contains shuffled ticks on which cyclone events were present;
-3. ***shuffle_no_cyclone.csv*** - contains shuffled ticks on which cyclone events weren't present.
+2. ***pretrained_models*** - contains state dictionaries of pretrained models, and also models themselves;
+3. ***shuffle_cyclone.csv*** - contains shuffled ticks on which cyclone events were present;
+4. ***shuffle_no_cyclone.csv*** - contains shuffled ticks on which cyclone events weren't present.
 
 #### Prerequisites
 
@@ -36,6 +53,14 @@ climate
 	...
 |   |   train.py	
 |
+└---pretrained_models
+|   |
+|   └---models
+|       |   ...
+|   |
+|   └---statedicts
+|       |   ...
+|    
 └---data
 |   |   cyclone_times.csv
 |   |   tropical_cyclones_data_1982_2020.csv

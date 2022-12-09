@@ -10,6 +10,7 @@ from show_test_data import show_test_data
 from sklearn import metrics
 from parameters import Stats
 from IPython.display import clear_output
+from config_reader import Config
 
 '''
 Train the network on given data.
