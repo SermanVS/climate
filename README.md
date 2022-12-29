@@ -7,9 +7,7 @@ The source code in this repository attempts to solve a task of recognizing and p
 The recognition means to identify whether there is a cyclone event present on a current tick, while the prediction task means to identify whether there will be a cyclone event present ***w*** ticks from the current tick.
 
 All networks are based on the formula
-$
-\sigma (\sum(\sigma((w * x - a) * b)) - c).
-$
+$\sigma (\sum(\sigma((w * x - a) * b)) - c).$
 But most networks alter this formula slightly to reduce a number of parameters or to limit their range. Also, most networks perform maxpooling before implementing the formula above.
 
 #### Data
