@@ -14,6 +14,8 @@ But most networks alter this formula slightly to reduce a number of parameters o
 
 The networks implemented here require specific metrics to learn properly. These metrics are ***MSLP_preproc***, ***LCC_w***, ***EVC_w***, ***degree_w***, ***closeness_w***. Each metric is a NumPy array of shape (36, 69, 113960) - 113960 ticks of images of size (36, 69).
 
+To compute ***data*** yourself, you can use the instructions from this repository https://github.com/mike-live/climate-networks
+
 #### Repository description
 
 1. ***src*** - contains Jupyter Notebook files with implemented neural networks and necessary .py files with functions;
