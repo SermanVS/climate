@@ -7,14 +7,14 @@ The source code in this repository attempts to solve a task of recognizing and p
 The recognition means to identify whether there is a cyclone event present on a current tick, while the prediction task means to identify whether there will be a cyclone event present ***w*** ticks from the current tick.
 
 All networks are based on the formula
-$$
-\sigma (\sum(\sigma((w * x - a) * b)) - c).
-$$
+$\sigma (\sum(\sigma((w * x - a) * b)) - c).$
 But most networks alter this formula slightly to reduce a number of parameters or to limit their range. Also, most networks perform maxpooling before implementing the formula above.
 
 #### Data
 
 The networks implemented here require specific metrics to learn properly. These metrics are ***MSLP_preproc***, ***LCC_w***, ***EVC_w***, ***degree_w***, ***closeness_w***. Each metric is a NumPy array of shape (36, 69, 113960) - 113960 ticks of images of size (36, 69).
+
+To compute ***data*** yourself, you can use the instructions from this repository https://github.com/mike-live/climate-networks
 
 #### Repository description
 
