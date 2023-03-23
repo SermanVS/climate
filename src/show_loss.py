@@ -3,7 +3,7 @@ import numpy as np
 
 from IPython.display import clear_output
 
-def show_loss(running_loss, epoch_loss, clear_after=True):
+def show_loss(running_loss, mean_epoch_loss, clear_after=True):
 
     plt.figure(figsize=[18, 6])
     plt.subplot(1, 3, 1)
@@ -16,18 +16,20 @@ def show_loss(running_loss, epoch_loss, clear_after=True):
     plt.grid()
 
     plt.subplot(1, 3, 2)
-    plt.plot(np.arange(start=len(running_loss) - 99, stop=len(running_loss) + 1, step=1), running_loss[-100:])
     plt.xlim((len(running_loss) - 99, len(running_loss) + 1))
     plt.ylim((0, max(running_loss)))
     plt.title("Loss change in window 100")
     plt.xlabel("iteration")
     plt.ylabel("loss")
     plt.grid()
+    if len(running_loss) > 100:
+        plt.plot(np.arange(start=len(running_loss) - 99, stop=len(running_loss) + 1, step=1), running_loss[-100:])
+        
 
     plt.subplot(1, 3, 3)
-    plt.plot(np.arange(start=1, stop=len(epoch_loss) + 1, step=1), epoch_loss, 'o-')
-    plt.xlim((1, len(epoch_loss) + 2))
-    plt.xticks(np.arange(start=1, stop=len(epoch_loss) + 3, step=1))
+    plt.plot(np.arange(start=1, stop=len(mean_epoch_loss) + 1, step=1), mean_epoch_loss, 'o-')
+    plt.xlim((1, len(mean_epoch_loss) + 2))
+    plt.xticks(np.arange(start=1, stop=len(mean_epoch_loss) + 3, step=1))
     plt.ylim((0, max(running_loss)))
     plt.title("Epoch mean loss")
     plt.xlabel("epoch")

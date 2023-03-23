@@ -81,32 +81,40 @@ def train(nn, batch_size, num_epochs, train_data, labels_train_pre, loss_func, o
 
         if (step_test):
             tp, tn, fp, fn, sigmas, _ = test(nn, args[0], args[1])  
-            test_stats = get_test_stats(args[0].shape[2], tp, tn, fp, fn, sigmas)          
-            test_stats_list.append(test_stats)          
+            test_stats = get_test_stats(args[0].shape[2], tp, tn, fp, fn, sigmas)  
+
+            tprs_test.append(test_stats.tpr)       
+            fprs_test.append(test_stats.fpr)    
+
+            #test_stats_list.append(test_stats)          
 
             tp, tn, fp, fn, sigmas, _ = test(nn, train_data, labels_train_pre)  
             train_stats = get_test_stats(args[0].shape[2], tp, tn, fp, fn, sigmas)       
-            train_stats_list.append(train_stats)
+            #train_stats_list.append(train_stats)
+
+            tprs_train.append(train_stats.tpr) 
+            fprs_train.append(train_stats.fpr) 
 
             show_test_data(test_stats_list, train_stats_list)
             nn.train()
         pass
         loss_vals.append(running_loss / train_data.shape[2])
         
-    tprs_test += [item.tpr for item in test_stats_list]
-    tprs_train += [item.tpr for item in train_stats_list]
-    fprs_test += [item.fpr for item in test_stats_list]
-    fprs_train += [item.fpr for item in train_stats_list]
+    #tprs_test += [item.tpr for item in test_stats_list]
+    #tprs_train += [item.tpr for item in train_stats_list]
+    #fprs_test += [item.fpr for item in test_stats_list]
+    #fprs_train += [item.fpr for item in train_stats_list]
 
     fprs_test.append(1)
     tprs_test.append(1)
     fprs_train.append(1)
     tprs_train.append(1)
 
+    # sort by fpr
     fprs_test, tprs_test = zip(*sorted(zip(fprs_test, tprs_test)))
     fprs_train, tprs_train = zip(*sorted(zip(fprs_train, tprs_train)))
 
-    # sort by fpr
+ 
     auc_test = metrics.auc(fprs_test, tprs_test)
     auc_train = metrics.auc(fprs_train, tprs_train)
     return auc_test, auc_train 
