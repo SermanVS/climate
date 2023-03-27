@@ -13,6 +13,7 @@ class CycloneEvents:
 def preproc_data(cyclone_events, metrics):
     cfg = Config()
     ce = CycloneEvents(cyclone_events)
+    
 
     less = ['network_metrics/LCC', 'network_metrics/LCC_w', 'network_metrics/closeness_w', 'network_metrics/LCC_0.9',
              'network_metrics/LCC_0.95', 'diff_metrics/network_metrics/LCC', 'diff_metrics/network_metrics/LCC_w',
@@ -32,7 +33,8 @@ def preproc_data(cyclone_events, metrics):
 
     metrics = np.reshape(metrics, (36, 69, 113960))
     data = metrics.copy().astype(np.float32)
-
+    # expand to all
+    np.nan_to_num(data, nan=0, copy=False)
     metric_name = cfg.metric_path.split('.')[0]
     if metric_name in greater:
         data = -np.log(1 - data + 1e-10)

@@ -6,7 +6,6 @@ from config_reader import Config
 
 def split_data(data, labels, ratio):
     cfg = Config()
-    np.nan_to_num(data, nan=0, copy=False)
 
     if cfg.mode != 'predict':
         # ticks where cyclone is present
