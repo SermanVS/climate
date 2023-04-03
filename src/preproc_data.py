@@ -34,11 +34,14 @@ def preproc_data(cyclone_events, metrics):
     metrics = np.reshape(metrics, (36, 69, 113960))
     data = metrics.copy().astype(np.float32)
     # expand to all
-    np.nan_to_num(data, nan=0, copy=False)
+    
     metric_name = cfg.metric_path.split('.')[0]
     if metric_name in greater:
         data = -np.log(1 - data + 1e-10)
     elif metric_name in less:
         data = -np.log(data + 1e-10)
+
+    data = (data - np.nanmean(data)) / np.nanstd(data)
+    data = np.nan_to_num(data, nan=0)
 
     return ce, data, metrics
